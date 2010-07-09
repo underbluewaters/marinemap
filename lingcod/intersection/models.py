@@ -6,6 +6,7 @@ from django.template.defaultfilters import slugify
 from django.db import transaction
 from lingcod.data_manager.models import DataLayer
 from osgeo import ogr
+from django.conf import settings
 #from django.contrib.gis.utils import LayerMapping
 import os
 import tempfile
@@ -328,7 +329,7 @@ class MultiFeatureShapefile(Shapefile):
             sf.save()
     
     @transaction.commit_on_success
-    def process_proxy_line(self, field_name='Aj_pct_rck', hard_name='Hard Proxy', soft_name='Soft Proxy'):
+    def process_proxy_line(self, field_name='Aj_pct_rck', hard_name='hard', soft_name='soft'):
         """This function is rather specific to the North Coast MLPA but could concievably be useful elsewhere.  This method
         takes a linear shapefile and, based on the numeric field specified under field_name, splits it into two linear shapefiles.
         The new shapefiles have segements that are substrings of the original line features.  The length of the substrings is 
@@ -672,7 +673,7 @@ class ShapefileField(models.Model):
         return self.name
 
 class TestPolygon(models.Model):
-    geometry = models.PolygonField(srid=3310)
+    geometry = models.PolygonField(srid=settings.GEOMETRY_DB_SRID)
     objects = models.GeoManager()
 
 class IntersectionFeature(models.Model):
@@ -990,21 +991,21 @@ class CommonFeatureInfo(models.Model):
         abstract = True
         
 class ArealFeature(CommonFeatureInfo):
-    geometry = models.PolygonField(srid=3310)
+    geometry = models.PolygonField(srid=settings.GEOMETRY_DB_SRID)
     objects = models.GeoManager()
     
     def intersection(self,geom):
         return self.geometry.intersection(geom)
     
 class LinearFeature(CommonFeatureInfo):
-    geometry = models.LineStringField(srid=3310)
+    geometry = models.LineStringField(srid=settings.GEOMETRY_DB_SRID)
     objects = models.GeoManager()
     
     def intersection(self,geom):
         return self.geometry.intersection(geom)
     
 class PointFeature(CommonFeatureInfo):
-    geometry = models.PointField(srid=3310)
+    geometry = models.PointField(srid=settings.GEOMETRY_DB_SRID)
     objects = models.GeoManager()
     
 class ResultCache(models.Model):

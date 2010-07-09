@@ -141,3 +141,5 @@ class ManipulatorsTest(TestCase):
         #clip to study region
         response0 = self.client.post('/manipulators/ClipToStudyRegion/', {'target_shape': display_kml(target_shape)})
         self.assertEquals(response0.status_code, 200)
+       
+    
