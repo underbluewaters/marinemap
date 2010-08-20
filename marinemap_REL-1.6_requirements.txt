@@ -1,0 +1,72 @@
+########
+# pip requirements file for marinemap/lingcod
+# this should install all requirements for marinemap 
+# (eventually - for now this is EXPERIMENTAL)
+#
+# Highly recomended to use this with virtualenv
+# To begin you need pip, virtualenv, hg, svn
+# -----------------------------------------
+# # Create a virtualenv
+# cd ~
+# virtualenv MyMarineMap
+#
+# # Install all requirements
+# pip -E MyMarineMap install -r marinemap_requirements.txt
+#
+# # Activate virtual env
+# cd MyMarineMap
+# source bin/activate
+# # .... do stuff .....
+# deactivate
+# -----------------------------------------
+#
+# Note that there are several hairy requirements that aren't handled 
+# by this file; these must be installed globally the hard way:
+#
+# GDAL : just copy the gdal.pth file into your local site packages dir
+# Mapnik : just copy the entire mapnik dir into your local site packages dir
+# PIL : symlink the PIL directory to site-packages dir
+# Postgis : set up according to the marinemap docs
+#
+#############
+
+# Lingcod itself
+# We dont want to install this explicity by default in case someone wants a newer version
+# -e hg+https://marinemap.googlecode.com/hg#egg=marinemap
+
+# Django/GeoDjango
+-e svn+http://code.djangoproject.com/svn/django/trunk@13443#egg=Django-1.3_pre_alpha-py2.6-dev_r13443
+
+# Dependencies
+BeautifulSoup==3.1.0.1
+Sphinx==1.0b2
+django-compress==1.0.1
+django-maintenancemode==0.9.2
+-e hg+http://bitbucket.org/ubernostrum/django-registration/@d36a38202ee3d09d342b000f4ff634296f90df49#egg=django_registration-tip
+-e svn+http://feedvalidator.googlecode.com/svn/trunk/feedvalidator/src@1064#egg=feedvalidator-dev_r1064
+elementtree==1.2.7-20070827-preview
+xlwt==0.7.2
+networkx==1.1
+boto==2.0b1
+django-celery==2.0.2
+ghettoq==0.4.1
+django-unittest-depth==0.6
+
+# Maybe needed?? These aren't listed in the docs but seem useful/necessary
+python-cjson==1.0.5
+epydoc==3.0.1
+docutils==0.7
+South==0.7.1
+psycopg2==2.2.2
+wsgiref==0.1.2
+numpy==1.4.1
+unittest-xml-reporting==1.0.3
+
+# ------- Problems ----------- #
+# Mapnik?
+
+# GDAL ?
+
+# Postgis ? 
+
+# PIL ?
