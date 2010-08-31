@@ -279,10 +279,10 @@ def hex8_to_rgba(hex8):
 from django.utils.importlib import import_module
 
 def load_session(request, session_key):
+    log = get_logger()
     if session_key and session_key != '0':
         engine = import_module(settings.SESSION_ENGINE)
         request.session = engine.SessionStore(session_key)
-
 
 def valid_browser(ua):
     """
@@ -351,3 +351,33 @@ class KMZUtil:
             elif os.path.isdir(full_path):
                 #print 'Entering folder: ' + str(full_path)
                 self.addFolderToZip(zip_file, full_path)
+
+import logging
+import inspect
+import tempfile
+def get_logger(caller_name=None):
+    try:
+        logfile = settings.LOG_FILE
+    except:
+        logfile = os.path.join(tempfile.gettempdir(),'marinemap_log.txt')
+        print "WARNING: settings.LOG_FILE not specified; using %s instead" % logfile
+
+    try:
+        # Use overall debug settings to determine loglevel
+        if settings.DEBUG:
+            level = logging.DEBUG
+        else:
+            level = logging.WARNING 
+    except:
+        level = logging.DEBUG
+    
+    logging.basicConfig(level=level,
+                format='%(asctime)s %(name)s %(levelname)s %(message)s',
+                filename=logfile)
+
+    if not caller_name:
+        caller = inspect.currentframe().f_back
+        caller_name = caller.f_globals['__name__']
+
+    logger = logging.getLogger(caller_name)
+    return logger

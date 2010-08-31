@@ -1,0 +1,67 @@
+{% extends "authopenid/base.html" %}
+{% load i18n %}
+
+
+
+{% block head %}{% endblock %}
+
+
+{% block content %}
+
+	<div id="completetxt">
+	<h2>{% trans "Your OpenID is verified! " %}</h2>
+
+    <div>
+
+      <div class="login">
+          <p> 
+          New to this site?
+          <a href="{% url registration_register %}">Register for a new local account</a>.
+          </p>
+      </div>
+
+      <h3> OR </h3>
+
+      <div class="login" style="width:400px;">
+        <p> Associate with existing account </p>
+        <form name="fverify" action="{% url user_register %}" method="POST">
+            <input type="hidden" name="next" value="{{ next }}" />
+			<fieldset>
+				<legend>{% trans "An existing account" %}</legend>
+				<div class="form-row"><label for="id_username">{% trans "Username" %}</label><br />{{ form2.username }}</div>
+				<div class="form-row"><label for="id_passwordl">{% trans "Password" %}</label><br />{{ form2.password }}</div>
+				<div class="submit-row"><input type="submit" name="bverify" value="{% trans "Verify" %}"></div>
+			</fieldset>
+		</form>
+	  </div>
+
+    </div>	
+
+	{% if form1.errors %}
+	<p class="errors">{% trans "Please correct errors below:" %}<br />
+		{% if form1.username.errors %} 
+			<span class="error">{{ form1.username.errors|join:", " }}</span>
+		{% endif %}
+		{% if form1.email.errors %} 
+			<span class="error">{{ form1.email.errors|join:", " }}</span>
+		{% endif %}
+	</p>
+	{% endif %}
+	{% if form2.errors %}
+	<p class="errors">{% trans "Please correct errors below:" %}<br />
+		{% if form2.username.errors %} 
+			<span class="error">{{ form2.username.errors|join:", " }}</span>
+		{% endif %}
+		{% if form2.password.errors %} 
+			<span class="error">{{ form2.password.errors|join:", " }}</span>
+		{% endif %}
+	</p>
+	{% endif %}
+    </div>
+
+
+	
+{% endblock %}
+
+	
+

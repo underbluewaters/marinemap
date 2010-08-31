@@ -13,6 +13,10 @@ settings.py or settings_local.py file.
 MarineMap Settings
 ------------------
 
+.. _LOG_FILE:
+``LOG_FILE``
+    Location of the marinemap log file output. Used for debugging. Defaults to `/tmp/marinemap.log` 
+
 .. _GEOMETRY_DB_SRID:
 
 ``GEOMETRY_DB_SRID``
@@ -141,6 +145,11 @@ MarineMap Settings
 
 ``BASE_DIR``
     Provides the path to the project codebase. 
+
+.. _OPENID_ENABLED:
+
+``OPENID_ENABLED``
+    Boolean. Determines whether to expose OpenID authentication. False implies local user/pass authentication only. Defaults to False. 
 
 Django Settings
 ---------------
