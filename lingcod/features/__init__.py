@@ -139,6 +139,13 @@ not a string path." % (name,))
             edits_original=True,
             confirm=confirm,
         ))
+
+        # Add a staticmap generic link
+        self.links.insert(0, alternate('PNG Image', 
+            'lingcod.staticmap.views.staticmap_link', 
+            select='multiple single',
+            method='GET',
+        ))
             
 
         self.valid_children = getattr(self._options, 'valid_children', None)
@@ -201,6 +208,9 @@ not a string path." % (name,))
         if self.enable_kml:
             self.links.insert(0,alternate('KML',
                 'lingcod.features.views.kml',
+                select='multiple single'))
+            self.links.insert(0,alternate('KMZ',
+                'lingcod.features.views.kmz',
                 select='multiple single'))
 
         for link in self.links:
