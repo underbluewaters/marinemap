@@ -2,8 +2,8 @@ from django.contrib.gis.db import models
 from lingcod.features import register
 from lingcod.features.models import Feature
 from django.utils.html import escape
+from django.conf import settings
 
-@register
 class Bookmark(Feature):
     description = models.TextField(default="", null=True, blank=True)
     latitude = models.FloatField()
@@ -13,6 +13,8 @@ class Bookmark(Feature):
     tilt = models.FloatField(default=0)
     roll = models.FloatField(default=0)
     altitudeMode = models.FloatField(default=1)
+    ip = models.IPAddressField(default="0.0.0.0", null=True, blank=True)
+    publicstate = models.TextField(default="{}")
     
     @property
     def kml(self):
@@ -28,18 +30,26 @@ class Bookmark(Feature):
         <Placemark id="%s">
             <visibility>1</visibility>
             <name>%s</name>
-            <description>%s</description>
             <styleUrl>#%s-default</styleUrl>
+            <ExtendedData>
+                <Data name="descr"><value>%s</value></Data>
+            </ExtendedData>
             %s
         </Placemark>
-        """ % (self.uid, escape(self.name), escape(self.description), self.model_uid(), 
-               camera) 
+        """ % (self.uid, escape(self.name), self.model_uid(), escape(self.description), camera) 
 
     @property
     def kml_style(self):
         return """
         <Style id="%s-default"> 
             <!-- invisible -->
+            <BalloonStyle>
+                <bgColor>ffeeeeee</bgColor>
+                <text> <![CDATA[ 
+                    <h3>$[name]</h3>
+                    <p>$[descr]</p>
+                ]]> </text>
+            </BalloonStyle>
             <IconStyle>
                 <scale>0.0</scale>
             </IconStyle>
@@ -58,3 +68,6 @@ class Bookmark(Feature):
         icon_url = 'bookmarks/images/bookmark.png'
         form_template = 'bookmarks/form.html'
         show_template = 'bookmarks/show.html'
+
+if settings.BOOKMARK_FEATURE:
+    Bookmark = register(Bookmark)

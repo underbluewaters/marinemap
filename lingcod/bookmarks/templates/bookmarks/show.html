@@ -4,7 +4,27 @@
 {% block panel %}
 <script type="text/javascript">
     lingcod.onShow(function(){
-        //pass
+        // Find the public layer tree
+        var tree = null;
+        for(var i=0; i<lingcod.layers.length; i++){
+            if(lingcod.layers[i].url.indexOf('public') != -1) {
+                tree = lingcod.layers[i].tree;
+                break;
+            }
+        }
+        if (tree) { 
+            tree.previousState = JSON.parse('{{instance.publicstate|safe}}');
+            tree.refresh();
+        }
+        {% if request.user.is_staff %}
+        var tog = function() {
+            $('#show_toggle_details').toggle();
+            $('#hide_toggle_details').toggle();
+            $('#show_camera_results').toggle();
+        };
+        $('#show_toggle_details').click(tog);
+        $('#hide_toggle_details').click(tog);
+        {% endif %}
     });
 </script>
 
@@ -20,8 +40,11 @@
 <p>To share this bookmarked map view with others, you can copy and paste this link to email, online forums, twitter or instant messaging. Some of the features on this map are protected content and may not be visible to all users.</p>
 {% endblock linkdescription %}
 
-<h2>Details</h2>
-<div id="camera_results" style="color:grey; font-family: monospace">
+
+{% if request.user.is_staff %}
+<a href="#" id="show_toggle_details" style="color:grey; font-family: monospace">show details</a>
+<a href="#" id="hide_toggle_details" style="display:none; color:grey; font-family: monospace">hide details</a>
+<div id="show_camera_results" style="display:none; color:grey; font-family: monospace">
     <ul>
         <li id="instance_latitude">latitude : {{instance.latitude}}</li>
         <li id="instance_longitude">longitude : {{instance.longitude}}</li>
@@ -30,8 +53,10 @@
         <li id="instance_tilt">tilt : {{instance.tilt}}</li>
         <li id="instance_roll">roll : {{instance.roll}}</li>
         <li id="instance_altitudeMode">altitudeMode : {{instance.altitudeMode}}</li>
+        <li id="instance_altitudeMode">publicstate : {{instance.publicstate}}</li>
     </ul>
 </div>
+{% endif %}
 
 
 {% endblock panel %}
