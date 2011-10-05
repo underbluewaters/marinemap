@@ -223,8 +223,14 @@ def create(request, model, action):
             form = form_class(values, label_suffix='')
         if form.is_valid():
             m = form.save(commit=False)
-            m.save()
-            form.save_m2m()
+            '''
+            Note on the following 3 lines:  
+            We need to call form.save_m2m after save but before run, this is accomplished in the Analysis model save method
+            '''
+            kwargs = {}
+            kwargs['form']=form
+            m.save(**kwargs)
+            
             return to_response(
                 status=201, 
                 location=m.get_absolute_url(),
@@ -359,8 +365,10 @@ def update(request, model, uid):
             form = form_class(values, instance=instance, label_suffix='')
         if form.is_valid():
             m = form.save(commit=False)
-            m.save()
-            form.save_m2m()
+            kwargs = {}
+            kwargs['form']=form
+            m.save(**kwargs)
+            
             return to_response(
                 status=200,
                 select=m.uid,
