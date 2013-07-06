@@ -10,7 +10,7 @@ except:
 
 from setuptools import setup, find_packages
 
-readme_text = file('README.txt', 'rb').read()
+readme_text = file('README.md', 'rb').read()
 
 from lingcod.common.default_settings import RELEASE
 
