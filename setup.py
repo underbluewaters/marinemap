@@ -1,4 +1,5 @@
 import warnings
+import os
 
 try:
     from distribute_setup import use_setuptools
@@ -10,7 +11,7 @@ except:
 
 from setuptools import setup, find_packages
 
-readme_text = file('README.txt', 'rb').read()
+readme_text = file(os.path.dirname(__file__) + '/README.md', 'rb').read()
 
 from lingcod.common.default_settings import RELEASE
 
@@ -28,7 +29,7 @@ setup_args = dict(
     license             = 'New BSD License',
     keywords            = 'kml marine decisionsupport science gis',
     long_description    = readme_text,
-    packages            = ['lingcod.%s' % x for x in find_packages('lingcod')],
+    packages            = ['lingcod.%s' % x for x in find_packages(os.path.dirname(__file__) + '/lingcod')],
     #scripts            = 
     #test_suite         = 
     classifiers         = [
