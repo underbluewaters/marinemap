@@ -1,10 +1,10 @@
-
 MarineMap
-==========
+=========
 
-.. image:: http://marinemap.org/mm_logo_only.gif
-   :width: 213
-   :height: 130
+_This repository is a fork of the 
+[original source on Google Code](http://code.google.com/p/marinemap/). It's been moved 
+here to support the continued development of the 
+[pyrifera data visualization tool](https://github.com/underbluewaters/pyrifera)._
 
 MarineMap is a web-based decision support tool for open and participatory spatial 
 planning in the marine environment. MarineMap offers a simple, flexible and powerful
@@ -16,13 +16,6 @@ The components are bundled into a python module called 'lingcod'. Using lingcod,
 one can create their own implementation of MarineMap or extend the tools for any
 sort of collaborative spatial planning process. 
 
-For more details, see:
-
-* MarineMap documentation_
-* MarineMap home_
-* MarineMap `code site`_
-
-
-.. _home: http://marinemap.org
-.. _code site: http://code.google.com/p/marinemap/ 
-.. _documentation: http://maps11.msi.ucsb.edu/marinemap-docs/
+* [homepage](http://marinemap.org)
+* [original code site](http://code.google.com/p/marinemap/)
+* [documentation](http://marinemap.readthedocs.org/en/latest/index.html)
