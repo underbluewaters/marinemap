@@ -11,10 +11,6 @@ from lingcod.features import get_model_options
 from lingcod.common.utils import asKml, clean_geometry, ensure_clean
 from lingcod.common.utils import get_logger, get_class, enable_sharing
 from lingcod.manipulators.manipulators import manipulatorsDict, NullManipulator
-try:
-	import mapnik
-except:
-	import mapnik2 as mapnik
 import re
 
 logger = get_logger()
@@ -337,6 +333,10 @@ class SpatialFeature(Feature):
         """
         Mapnik style object containing rules for symbolizing features in staticmap
         """
+        try:
+            import mapnik
+        except:
+            import mapnik2 as mapnik
         style = mapnik.Style()
         return style
 
@@ -507,6 +507,10 @@ class PolygonFeature(SpatialFeature):
  
     @classmethod
     def mapnik_style(self):
+        try:
+            import mapnik
+        except:
+            import mapnik2 as mapnik
         polygon_style = mapnik.Style()
         ps = mapnik.PolygonSymbolizer(mapnik.Color('#ffffff'))
         ps.fill_opacity = 0.5
@@ -551,6 +555,10 @@ class LineFeature(SpatialFeature):
 
     @classmethod
     def mapnik_style(self):
+        try:
+            import mapnik
+        except:
+            import mapnik2 as mapnik
         line_style = mapnik.Style()
         ls = mapnik.LineSymbolizer(mapnik.Color('#444444'),1.5)
         ls.stroke_opacity = 0.5
@@ -592,6 +600,10 @@ class PointFeature(SpatialFeature):
     
     @classmethod
     def mapnik_style(self):
+        try:
+            import mapnik
+        except:
+            import mapnik2 as mapnik
         point_style = mapnik.Style()
         r = mapnik.Rule()
         r.symbols.append(mapnik.PointSymbolizer())
