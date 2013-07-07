@@ -1,11 +1,12 @@
 import os
+from release import RELEASE
 os.environ["CELERY_LOADER"] = "django"
 
 # !!!!!!!!!!!!!!!!!!!!!!!
 # DONT FORGET TO DOCUMENT ANY NEW SETTINGS IN /docs/settings.rst
 # !!!!!!!!!!!!!!!!!!!!!!
 
-RELEASE = '3.0dev' # The next milestone
+# RELEASE = '3.0dev' # The next milestone
 APP_NAME = 'MarineMap'
 
 LANGUAGE_CODE = 'en-us'

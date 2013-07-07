@@ -11,15 +11,19 @@ except:
 
 from setuptools import setup, find_packages
 
-readme_text = file(os.path.dirname(__file__) + '/README.md', 'rb').read()
+readme_text = file(os.path.join(os.path.dirname(__file__), 'README.md'), 'rb').read()
 
-from lingcod.common.default_settings import RELEASE
+with open('marinemap_requirements.txt') as f:
+    lines = f.read().splitlines()
+
+from lingcod.common.release import RELEASE
 
 setup_args = dict(
     name                = 'marinemap',
     version             = RELEASE,
     #requires_python     = '>=2.5,<3',
     #requires_external  = 
+    install_requires    = [line for line in lines if line.startswith('#') is False and len(line) > 0],
     description         = 'A framework for building decisison support tools supporting marine spatial planning',
     author              = 'MarineMap Consortium',
     author_email        = 'mcclintock@msi.ucsb.edu',
@@ -29,7 +33,7 @@ setup_args = dict(
     license             = 'New BSD License',
     keywords            = 'kml marine decisionsupport science gis',
     long_description    = readme_text,
-    packages            = ['lingcod.%s' % x for x in find_packages(os.path.dirname(__file__) + '/lingcod')],
+    packages            = ['lingcod.%s' % x for x in find_packages(os.path.join(os.path.dirname(__file__), 'lingcod'))],
     #scripts            = 
     #test_suite         = 
     classifiers         = [

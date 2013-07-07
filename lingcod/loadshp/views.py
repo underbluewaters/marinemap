@@ -5,7 +5,6 @@ from django.utils import simplejson
 from django.template import Context, RequestContext
 from django.template.loader import get_template
 from lingcod.common import default_mimetypes as mimetypes
-from lingcod.common.utils import kml_errors
 from forms import UploadForm
 
 
