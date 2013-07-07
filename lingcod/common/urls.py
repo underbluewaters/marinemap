@@ -9,9 +9,13 @@ urlpatterns = patterns('lingcod.common.views',
     url(r'^$', 'map', name='map'),
 )
 
+if 'lingcod.openid' in settings.INSTALLED_APPS:
+    urlpatterns += patterns('lingcod',
+        (r'^accounts/', include('lingcod.openid.urls')),
+        (r'^accounts/profile/', include('lingcod.user_profile.urls')),
+    )
+
 urlpatterns += patterns('lingcod',
-    (r'^accounts/', include('lingcod.openid.urls')),
-    (r'^accounts/profile/', include('lingcod.user_profile.urls')),
     (r'^faq/', include('lingcod.simplefaq.urls')),
     (r'^features/', include('lingcod.features.urls')),
     (r'^help/', include('lingcod.help.urls')),
@@ -32,12 +36,13 @@ urlpatterns += patterns('lingcod',
     #(r'^intersection/', include('lingcod.intersection.urls')),
 )
 
-urlpatterns += patterns('',
-    (r'^admin/', include(admin.site.urls)),
-)
 
 # Useful for serving files when using the django dev server
 urlpatterns += patterns('',
     (r'^media(.*)/upload/', 'lingcod.common.views.forbidden'),
     (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': True }),
+)
+
+urlpatterns += patterns('',
+    (r'^admin/', include(admin.site.urls)),
 )

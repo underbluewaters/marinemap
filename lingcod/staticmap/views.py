@@ -1,7 +1,10 @@
 try:
 	import mapnik
 except:
-	import mapnik2 as mapnik
+    try:
+    	import mapnik2 as mapnik
+    except:
+        mapnik = {}
 import settings
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseBadRequest, HttpResponseServerError, HttpResponseForbidden, Http404
 from django.template import RequestContext
@@ -12,7 +15,10 @@ from lingcod.common import utils
 from lingcod.staticmap.models import MapConfig
 from lingcod.features import get_feature_models, get_collection_models, get_feature_by_uid, get_model_by_uid
 from lingcod.features.models import FeatureCollection, SpatialFeature, PointFeature, PolygonFeature, LineFeature
-from djmapnik.adapter import PostgisLayer 
+try:
+    from djmapnik.adapter import PostgisLayer 
+except:
+    PostgisLayer = {}
 from lingcod.common.utils import get_logger
 from django.template.defaultfilters import slugify
 log = get_logger()
