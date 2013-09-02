@@ -60,4 +60,4 @@ wsgiref>=0.1.2
 #numpy>=1.5.1
 unittest-xml-reporting>=1.2
 django-kombu>=0.9.2
-GDAL>=1.6
+GDAL==1.7
