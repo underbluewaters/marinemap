@@ -21,7 +21,7 @@ from lingcod.common.release import RELEASE
 
 if platform.system is 'Windows':
     [line for line in lines if line.startswith('#') is False and len(line) > 0 and line.startswith('GDA') is False]
-else
+else:
     [line for line in lines if line.startswith('#') is False and len(line) > 0]
     
 setup_args = dict(
