@@ -1,5 +1,6 @@
 import warnings
 import os
+import platform
 
 try:
     from distribute_setup import use_setuptools
@@ -18,12 +19,17 @@ with open('marinemap_requirements.txt') as f:
 
 from lingcod.common.release import RELEASE
 
+if platform.system is 'Windows':
+    [line for line in lines if line.startswith('#') is False and len(line) > 0 and line.startswith('GDA') is False]
+else
+    [line for line in lines if line.startswith('#') is False and len(line) > 0]
+    
 setup_args = dict(
     name                = 'marinemap',
     version             = RELEASE,
     #requires_python     = '>=2.5,<3',
     #requires_external  = 
-    install_requires    = [line for line in lines if line.startswith('#') is False and len(line) > 0],
+    install_requires    = deps,
     description         = 'A framework for building decisison support tools supporting marine spatial planning',
     author              = 'MarineMap Consortium',
     author_email        = 'mcclintock@msi.ucsb.edu',
