@@ -20,7 +20,7 @@ with open('marinemap_requirements.txt') as f:
 from lingcod.common.release import RELEASE
 
 if platform.system is 'Windows':
-    deps = [line for line in lines if line.startswith('#') is False and len(line) > 0 and line.startswith('GDA') is False]
+    deps = [line for line in lines if line.startswith('#') is False and len(line) > 0 and line.startswith('GDAL') is False]
 else:
     deps = [line for line in lines if line.startswith('#') is False and len(line) > 0]
     
