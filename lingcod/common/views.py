@@ -3,7 +3,6 @@ from django.template import RequestContext
 from django.shortcuts import get_object_or_404, render_to_response
 from lingcod.common import default_mimetypes as mimetypes
 from lingcod.news.models import Entry
-from lingcod.common.utils import valid_browser
 from lingcod.features import user_sharing_groups
 from lingcod.studyregion.models import StudyRegion
 from lingcod.layers.models import PublicLayerList, PrivateKml
@@ -24,20 +23,6 @@ def map(request, template_name='common/map_ext.html', extra_context={}):
     set_news_cookie = False
     set_viewed_cookie = False
     show_panel = None
-
-    useragent = request.META['HTTP_USER_AGENT']
-    enforce_supported = True
-    if 'supported' in request.REQUEST:
-        if request.REQUEST['supported'] == 'false':
-            enforce_supported = False
-    if not valid_browser(useragent) and enforce_supported:
-        from lingcod.common import uaparser
-        bp = uaparser.browser_platform(useragent)
-        context = {'useragent':useragent, 
-                'browser_platform': bp.__repr__(), 
-                'redirect_url': settings.LOGIN_REDIRECT_URL}
-        context.update(extra_context)
-        return render_to_response('common/supported_browsers.html', context)
 
     if "mm_already_viewed" in request.COOKIES:
         if "mm_last_checked_news" in request.COOKIES:
